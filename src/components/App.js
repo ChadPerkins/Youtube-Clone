@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from "react";
 
 import useVideos from "../hooks/useVideos";
+import CommentList from "./CommentList";
 import SearchBar from "./SearchBar";
 import VideoDetail from "./VideoDetail";
 import VideoList from "./VideoList";
 
+import useComments from "../hooks/useComments";
+
 const App = () => {
+  // const [comments, setComments] = useState([]);
+  
+  // const [selectedComments, setSelectedComments] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, search] = useVideos('programming');
+  const [comments, getComments] = useComments(videos[0])
   
   // Set the value of selectedVideo's state to default as
   // the first video from the response
   useEffect(() => {
     setSelectedVideo(videos[0]);
-  }, [videos]);
-  
+  }, [videos]); 
 
+  useEffect(() => {
+    getComments(selectedVideo);
+  }, [selectedVideo]); 
+  
+  // Set the value of selectedVideo's state to the selected video
   const onVideoSelect = video => {
-    // Set the value of selectedVideo's state to the selected video
     setSelectedVideo(video);
   };
   
@@ -28,6 +38,10 @@ const App = () => {
         <div className="ui row">
           <div className="eleven wide column">
             <VideoDetail video={selectedVideo} />
+            <CommentList 
+              comments={comments}
+              videos={videos}
+            />
           </div>
           <div className="five wide column">
             <VideoList

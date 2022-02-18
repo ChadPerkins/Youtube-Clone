@@ -12,7 +12,7 @@ const VideoList = props => {
                 onVideoSelect={props.onVideoSelect}
                 video={video}
                 />
-        )
+        );
     });
 
     
