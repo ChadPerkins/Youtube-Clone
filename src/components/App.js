@@ -5,26 +5,33 @@ import CommentList from "./CommentList";
 import SearchBar from "./SearchBar";
 import VideoDetail from "./VideoDetail";
 import VideoList from "./VideoList";
-
-import useComments from "../hooks/useComments";
+import youtube from "../apis/youtube";
 
 const App = () => {
-  // const [comments, setComments] = useState([]);
-  
-  // const [selectedComments, setSelectedComments] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, search] = useVideos('programming');
-  const [comments, getComments] = useComments(videos[0])
+  const [comments, setComments] = useState([]);
+  
+  const getComments = async (video) => {
+    if(video){
+      const res = await youtube.get('/commentThreads', {
+        params: {
+          videoId: video.id.videoId
+        }
+      });
+      setComments(res.data.items);
+    }
+  };
   
   // Set the value of selectedVideo's state to default as
   // the first video from the response
   useEffect(() => {
     setSelectedVideo(videos[0]);
   }, [videos]); 
-
+  
   useEffect(() => {
     getComments(selectedVideo);
-  }, [selectedVideo]); 
+  }, [selectedVideo]);
   
   // Set the value of selectedVideo's state to the selected video
   const onVideoSelect = video => {
