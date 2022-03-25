@@ -1,6 +1,6 @@
 # A YouTube clone built with React.
 
-This project is still a work in progress. The current form can be viewed at: https://youtube-clone-eight-steel.vercel.app/
+This project is still a work in progress. The current form can be viewed <a href="https://youtube-clone-eight-steel.vercel.app" target="_blank">here<a/>
 
 ## Current components:
 
